@@ -2,6 +2,7 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
+
 IS_DARK  = st.get_option("theme.base") == "dark"
 TEXT_CLR = "#f5e6f0" if IS_DARK else "#1a0030"
 SUB_CLR  = "#d4cce8" if IS_DARK else "#7a3058"
