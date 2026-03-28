@@ -5,10 +5,7 @@ st.set_page_config(layout="wide")
 IS_DARK  = st.get_option("theme.base") == "dark"
 TEXT_CLR = "#f5e6f0" if IS_DARK else "#1a0030"
 SUB_CLR  = "#d4cce8" if IS_DARK else "#7a3058"
-CARD_BG  = "rgba(255,255,255,0.06)" if IS_DARK else "rgba(255,255,255,0.85)"
-
-if "lang" not in st.session_state:
-    st.session_state["lang"] = "English"
+CARD_BG  = "rgba(40, 15, 35, 0.85)" if IS_DARK else "rgba(255,255,255,0.9)"
 
 # ── CSS — no f-string interpolation inside card rule to avoid dark_mode error ──
 st.markdown(f"""
@@ -16,7 +13,12 @@ st.markdown(f"""
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
 html, body, [class*="css"] {{ font-family: 'Quicksand', sans-serif !important; }}
-.main .block-container {{ padding-top: 2.5rem; max-width: 1000px; }}
+.main .block-container {{
+    padding-top: 2.5rem !important;
+    max-width: 1100px;
+    position: relative;
+    z-index: 1;
+}}
 
 /* ── Animated title ── */
 @keyframes fadeUp {{
@@ -113,81 +115,41 @@ section[data-testid="stSidebar"] label {{
 </style>
 """, unsafe_allow_html=True)
 
-# ── Language ──────────────────────────────────────────────────────────────────
-LANGS = ["English", "Русский", "O'zbek"]
-lang  = st.session_state["lang"]
-
-TEXTS = {
-    "English": {
-        "tagline": "Clean · Transform · Visualize — all in one place.",
-        "feat1_t": "Upload",      "feat1_d": "CSV, Excel, JSON or Google Sheets",
-        "feat2_t": "Clean",       "feat2_d": "Handle missing values, duplicates and outliers",
-        "feat3_t": "Visualize",   "feat3_d": "9 chart types with filters and export",
-        "feat4_t": "Export",      "feat4_d": "Download cleaned data, logs and reports",
-        "cta":     "Open the sidebar and go to Upload to get started.",
-    },
-    "Русский": {
-        "tagline": "Очистка · Трансформация · Визуализация — всё в одном месте.",
-        "feat1_t": "Загрузка",    "feat1_d": "CSV, Excel, JSON или Google Sheets",
-        "feat2_t": "Очистка",     "feat2_d": "Пропуски, дубли, выбросы и масштабирование",
-        "feat3_t": "Графики",     "feat3_d": "9 типов графиков с фильтрами и экспортом",
-        "feat4_t": "Экспорт",     "feat4_d": "Скачайте данные, логи и отчёты",
-        "cta":     "Откройте боковую панель и перейдите в раздел Upload.",
-    },
-    "O'zbek": {
-        "tagline": "Tozalash · O'zgartirish · Vizualizatsiya — barchasi bir joyda.",
-        "feat1_t": "Yuklash",     "feat1_d": "CSV, Excel, JSON yoki Google Sheets",
-        "feat2_t": "Tozalash",    "feat2_d": "Yo'qolgan qiymatlar, dublikatlar, outlierlar",
-        "feat3_t": "Grafiklar",   "feat3_d": "9 turdagi grafiklar, filtrlar va eksport",
-        "feat4_t": "Eksport",     "feat4_d": "Tozalangan ma'lumotlar va hisobotlarni yuklab oling",
-        "cta":     "Yon panelni oching va Upload bo'limiga o'ting.",
-    },
-}
-t = TEXTS[lang]
-
 # ── App name + tagline ────────────────────────────────────────────────────────
 st.markdown('<div class="app-name">DataCraft</div>', unsafe_allow_html=True)
-st.markdown(f'<div class="app-tagline">{t["tagline"]}</div>', unsafe_allow_html=True)
+st.markdown('<div class="app-tagline">Clean · Transform · Visualize — all in one place.</div>', unsafe_allow_html=True)
 st.markdown('<div class="app-divider"></div>', unsafe_allow_html=True)
 
-# ── Language selector ─────────────────────────────────────────────────────────
-c1, c2, c3, c4, c5 = st.columns([2,1,1,1,2])
-for col, l in zip([c2, c3, c4], LANGS):
-    with col:
-        if st.button(l, key=f"lang_{l}"):
-            st.session_state["lang"] = l
-            st.rerun()
-
 # ── Feature cards ─────────────────────────────────────────────────────────────
-st.markdown(f"""
+st.markdown("""
 <div class="feat-grid">
   <div class="feat-card">
     <span class="feat-icon">&#128194;</span>
-    <div class="feat-title">{t["feat1_t"]}</div>
-    <div class="feat-desc">{t["feat1_d"]}</div>
+    <div class="feat-title">Upload</div>
+    <div class="feat-desc">CSV, Excel, JSON or Google Sheets</div>
   </div>
   <div class="feat-card">
     <span class="feat-icon">&#129529;</span>
-    <div class="feat-title">{t["feat2_t"]}</div>
-    <div class="feat-desc">{t["feat2_d"]}</div>
+    <div class="feat-title">Clean</div>
+    <div class="feat-desc">Handle missing values, duplicates and outliers</div>
   </div>
   <div class="feat-card">
     <span class="feat-icon">&#128202;</span>
-    <div class="feat-title">{t["feat3_t"]}</div>
-    <div class="feat-desc">{t["feat3_d"]}</div>
+    <div class="feat-title">Visualize</div>
+    <div class="feat-desc">9 chart types with filters and export</div>
   </div>
   <div class="feat-card">
     <span class="feat-icon">&#128229;</span>
-    <div class="feat-title">{t["feat4_t"]}</div>
-    <div class="feat-desc">{t["feat4_d"]}</div>
+    <div class="feat-title">Export</div>
+    <div class="feat-desc">Download cleaned data, logs and reports</div>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
 # ── CTA ───────────────────────────────────────────────────────────────────────
-st.markdown(f"""
+st.markdown("""
 <div class="cta-wrap">
-  <div class="cta-note">{t["cta"]}</div>
+  <div class="cta-note">Open the sidebar and go to Upload to get started.</div>
 </div>
 """, unsafe_allow_html=True)
 
