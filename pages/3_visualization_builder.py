@@ -15,7 +15,7 @@ SPINE_CLR = "#5a2040" if IS_DARK else "#e8c0d5"
 TEXT_CLR  = "#f5e6f0" if IS_DARK else "#1a0030"
 SUB_CLR   = "#d4cce8" if IS_DARK else "#7a3058"
 LEGEND_FC = "#2e0d20" if IS_DARK else "#fff0f7"
-CARD_BG   = "rgba(255,255,255,0.05)" if IS_DARK else "rgba(255,255,255,0.9)"
+CARD_BG  = "rgba(40, 15, 35, 0.85)" if IS_DARK else "rgba(255,255,255,0.9)"
 BORD_CLR  = "rgba(255,94,163,0.3)"
 
 PALETTE = ["#FF5EA3","#f472b6","#fb7185","#e879f9","#c084fc","#60a5fa","#34d399"]
@@ -48,11 +48,16 @@ section[data-testid="stSidebar"] label {{
 [data-testid="stExpander"] {{
     margin-top: 1rem !important;
 }}
-.main .block-container {{ padding-top: 1.6rem; max-width: 1100px; }}
+.main .block-container {{
+    padding-top: 2.5rem !important;
+    max-width: 1100px;
+    position: relative;
+    z-index: 1;
+}}
 
 /* ── Hero ── */
 .viz-hero {{
-    background: linear-gradient(120deg, #1a0030 0%, #3d0060 55%, #FF007F 100%);
+    background: {"linear-gradient(120deg, #1a0030 0%, #3d0060 55%, #FF007F 100%)" if IS_DARK else "linear-gradient(120deg, #6b21a8 0%, #9333ea 55%, #FF007F 100%)"};
     border-radius: 16px; padding: 2rem 2.5rem 1.7rem;
     margin-bottom: 2rem; position: relative; overflow: hidden;
 }}
