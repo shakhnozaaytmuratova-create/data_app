@@ -4,8 +4,6 @@
 
 DataCraft is an interactive web-based application developed using Streamlit that supports the full data analysis workflow. The system enables users to upload datasets, perform data cleaning and transformation, generate visualizations, and export structured analytical reports.
 
-The primary goal of the application is to provide a unified and user-friendly environment for exploratory data analysis and preprocessing, with an emphasis on transparency, reproducibility, and practical usability.
-
 ---
 
 ## Objectives
