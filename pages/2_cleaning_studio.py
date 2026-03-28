@@ -10,32 +10,40 @@ st.set_page_config(layout="wide")
 IS_DARK  = st.get_option("theme.base") == "dark"
 TEXT_CLR = "#f5f0ff" if IS_DARK else "#1a0030"
 SUB_CLR  = "#d4cce8" if IS_DARK else "#5a4a7a"
-CARD_BG  = "rgba(255,255,255,0.05)" if IS_DARK else "rgba(255,255,255,0.9)"
+CARD_BG  = "rgba(40, 15, 35, 0.85)" if IS_DARK else "rgba(255,255,255,0.9)"
 BORD_CLR = "rgba(255,94,163,0.3)"
 
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
-html, body, [class*="css"], p, span, div, label, input, textarea, button,
-.stMarkdown, .stMarkdown p, .stMarkdown span,
-[data-testid="stMarkdownContainer"], [data-testid="stMarkdownContainer"] *,
-[data-testid="stText"], [data-testid="stText"] *,
-[data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] *,
-[data-testid="metric-container"], [data-testid="metric-container"] *,
-[data-testid="stDataFrame"], [data-testid="stFileUploader"] *,
-[data-testid="stExpander"] *, .stTabs *, .stSlider *,
-.stSelectbox *, .stMultiSelect *, .stNumberInput *,
-.stRadio *, .stCheckbox *, .stTextInput *,
-section[data-testid="stSidebar"] * {{
+html, body {{ font-family: 'Quicksand', sans-serif !important; }}
+.stMarkdown p, .stMarkdown span,
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] span,
+[data-testid="stCaptionContainer"] p,
+[data-testid="metric-container"] p,
+[data-testid="metric-container"] div,
+button[data-baseweb="tab"],
+.stSelectbox label, .stMultiSelect label,
+.stSlider label, .stNumberInput label,
+.stRadio label, .stCheckbox label,
+[data-testid="stExpander"] summary p,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label {{
     font-family: 'Quicksand', sans-serif !important;
 }}
 
-.main .block-container {{ padding-top: 1.6rem; max-width: 1200px; }}
+.main .block-container {{
+    padding-top: 2.5rem !important;
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+}}
 
 /* ── Hero ── */
 .clean-hero {{
-    background: linear-gradient(120deg, #1a0030 0%, #3d0060 55%, #FF007F 100%);
+    background: {"linear-gradient(120deg, #1a0030 0%, #3d0060 55%, #FF007F 100%)" if IS_DARK else "linear-gradient(120deg, #6b21a8 0%, #9333ea 55%, #FF007F 100%)"};
     border-radius: 16px; padding: 2rem 2.5rem 1.7rem;
     margin-bottom: 2rem; position: relative; overflow: hidden;
 }}
@@ -166,7 +174,7 @@ def stats_bar():
 st.markdown("""
 <div class="clean-hero">
   <div class="cl-badge">Page B · Cleaning Studio</div>
-  <h1> Cleaning &amp; Preparation Studio</h1>
+  <h1>🧹 Cleaning &amp; Preparation Studio</h1>
   <p>Handle missing values, remove duplicates, fix types, encode categories, treat outliers, and scale — all in one place.</p>
 </div>
 """, unsafe_allow_html=True)
@@ -266,7 +274,7 @@ with tabs[0]:
 
                 st.session_state["df"] = df_new
                 after_r, after_c = df_new.shape
-                st.success(" Applied successfully")
+                st.success("✅ Applied successfully")
                 m1, m2, m3 = st.columns(3)
                 m1.metric("Rows",    f"{before_r} → {after_r}",  delta=after_r-before_r)
                 m2.metric("Columns", f"{before_c} → {after_c}",  delta=after_c-before_c)
@@ -327,7 +335,7 @@ with tabs[1]:
                 st.info("No duplicates found — nothing removed.")
             else:
                 log_action("Remove Duplicates", f"removed={removed}, keep={keep}, subset={subset}")
-                st.success(f" Removed {removed:,} duplicate rows")
+                st.success(f"✅ Removed {removed:,} duplicate rows")
 
     with right:
         st.markdown('<span class="sec-title">Duplicate Preview</span>', unsafe_allow_html=True)
@@ -335,7 +343,7 @@ with tabs[1]:
         dup_mask = df.duplicated(subset=subset_preview, keep=False)
         dup_df   = df[dup_mask]
         if len(dup_df) == 0:
-            st.success(" No duplicates found in current dataset.")
+            st.success("✅ No duplicates found in current dataset.")
         else:
             st.warning(f"{len(dup_df):,} rows involved in duplicates")
             st.dataframe(dup_df.head(200), use_container_width=True)
@@ -378,7 +386,7 @@ with tabs[2]:
 
                 st.session_state["df"] = df_new
                 log_action("Cast Type", f"{dt_col} → {dt_target}")
-                st.success(f" '{dt_col}' cast to {dt_target}")
+                st.success(f"✅ '{dt_col}' cast to {dt_target}")
 
             except Exception as e:
                 st.error(f"Cast failed: {e}")
@@ -525,7 +533,7 @@ with tabs[4]:
 
                     st.session_state["df"] = df_new
                     log_action("Outlier Treatment", f"{out_col}, method={out_meth}, action={out_act}, n={n_out}")
-                    st.success(f" Treated {n_out:,} outlier(s) in '{out_col}'")
+                    st.success(f"✅ Treated {n_out:,} outlier(s) in '{out_col}'")
 
                 except Exception as e:
                     st.error(f"Outlier treatment failed: {e}")
@@ -612,7 +620,7 @@ with tabs[5]:
 
                         st.session_state["df"] = df_new
                         log_action("Scaling", f"method={sc_method}, cols={valid}")
-                        st.success(f" Scaled {len(valid)} column(s)")
+                        st.success(f"✅ Scaled {len(valid)} column(s)")
                     except Exception as e:
                         st.error(f"Scaling failed: {e}")
 
@@ -643,7 +651,7 @@ with tabs[6]:
                 else:
                     st.session_state["df"] = st.session_state["df"].drop(columns=drop_sel)
                     log_action("Drop Columns", str(drop_sel))
-                    st.success(f" Dropped: {drop_sel}")
+                    st.success(f"✅ Dropped: {drop_sel}")
 
         elif col_op == "Rename Column":
             ren_col = st.selectbox("Column to rename", df.columns, key="col_ren_src")
@@ -656,7 +664,7 @@ with tabs[6]:
                 else:
                     st.session_state["df"] = st.session_state["df"].rename(columns={ren_col: ren_new})
                     log_action("Rename Column", f"{ren_col} → {ren_new}")
-                    st.success(f" Renamed '{ren_col}' → '{ren_new}'")
+                    st.success(f"✅ Renamed '{ren_col}' → '{ren_new}'")
 
         elif col_op == "Reorder Columns":
             st.caption("Drag to reorder isn't available in Streamlit — use the list below to set order by selecting columns in your preferred sequence.")
@@ -667,7 +675,7 @@ with tabs[6]:
                 final_order  = new_order + missing_cols
                 st.session_state["df"] = st.session_state["df"][final_order]
                 log_action("Reorder Columns", str(final_order))
-                st.success(" Columns reordered")
+                st.success("✅ Columns reordered")
 
     with right:
         st.markdown('<span class="sec-title">Current Columns</span>', unsafe_allow_html=True)
@@ -698,7 +706,7 @@ with tabs[7]:
     st.markdown('<span class="sec-title">Missing Values Check</span>', unsafe_allow_html=True)
     total_miss = int(df_cur.isnull().sum().sum())
     if total_miss == 0:
-        st.success(" No missing values remaining.")
+        st.success("✅ No missing values remaining.")
     else:
         st.warning(f"⚠️ {total_miss:,} missing values remain.")
         miss_left = df_cur.isnull().sum()
@@ -708,7 +716,7 @@ with tabs[7]:
     st.markdown('<span class="sec-title">Duplicate Check</span>', unsafe_allow_html=True)
     n_dupes = int(df_cur.duplicated().sum())
     if n_dupes == 0:
-        st.success(" No duplicate rows remaining.")
+        st.success("✅ No duplicate rows remaining.")
     else:
         st.warning(f"⚠️ {n_dupes:,} duplicate rows remain.")
 
@@ -726,12 +734,12 @@ with tabs[7]:
     st.markdown("---")
     left_b, right_b = st.columns(2)
     with left_b:
-        if st.button(" Restore Original Dataset", key="val_restore"):
+        if st.button("⏪ Restore Original Dataset", key="val_restore"):
             if "original_df" in st.session_state:
                 st.session_state["df"]  = st.session_state["original_df"].copy()
                 st.session_state["log"] = []
-                st.success(" Dataset restored to original.")
+                st.success("✅ Dataset restored to original.")
                 st.rerun()
     with right_b:
         csv_out = df_cur.to_csv(index=False).encode("utf-8")
-        st.download_button(" Download Cleaned CSV", csv_out, "cleaned_data.csv", "text/csv", key="val_dl")
+        st.download_button("⬇️ Download Cleaned CSV", csv_out, "cleaned_data.csv", "text/csv", key="val_dl")
