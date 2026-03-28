@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 IS_DARK  = st.get_option("theme.base") == "dark"
 TEXT_CLR = "#f5e6f0" if IS_DARK else "#1a0030"
 SUB_CLR  = "#d4cce8" if IS_DARK else "#7a3058"
-CARD_BG  = "rgba(255,255,255,0.05)" if IS_DARK else "rgba(255,255,255,0.9)"
+CARD_BG  = "rgba(40, 15, 35, 0.85)" if IS_DARK else "rgba(255,255,255,0.9)"
 
 st.markdown(f"""
 <style>
@@ -20,9 +20,14 @@ html, body {{ font-family: 'Quicksand', sans-serif !important; }}
 section[data-testid="stSidebar"] p, section[data-testid="stSidebar"] label {{
     font-family: 'Quicksand', sans-serif !important;
 }}
-.main .block-container {{ padding-top: 1.6rem; max-width: 1100px; }}
+.main .block-container {{
+    padding-top: 2.5rem !important;
+    max-width: 1100px;
+    position: relative;
+    z-index: 1;
+}}
 .hero {{
-    background: linear-gradient(120deg, #1a0030 0%, #3d0060 55%, #FF007F 100%);
+    background: {"linear-gradient(120deg, #1a0030 0%, #3d0060 55%, #FF007F 100%)" if IS_DARK else "linear-gradient(120deg, #6b21a8 0%, #9333ea 55%, #FF007F 100%)"};
     border-radius: 16px; padding: 2rem 2.5rem 1.7rem;
     margin-bottom: 2rem; position: relative; overflow: hidden;
 }}
