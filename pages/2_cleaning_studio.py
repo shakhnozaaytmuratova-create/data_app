@@ -143,6 +143,14 @@ def col_type(df, c):
 def get_col_types(df, cols):
     return {c: col_type(df, c) for c in cols}
 
+def clean_numeric(series: pd.Series) -> pd.Series:
+    return (
+        series.astype(str)
+        .str.replace(r"[^\d\.\-]", "", regex=True)  # remove currency, commas, text
+        .replace("", np.nan)
+        .astype(float)
+    )
+
 def fill_methods_for(col_types):
     types = set(col_types.values())
     if types == {"numeric"}:
@@ -359,7 +367,11 @@ with tabs[2]:
         st.markdown('<div class="op-panel"><div class="op-label">Operations</div><div class="op-title">Cast Column Type</div></div>', unsafe_allow_html=True)
 
         dt_col    = st.selectbox("Column", df.columns, key="dt_col")
-        dt_target = st.selectbox("Cast to", ["int", "float", "str", "datetime", "bool", "category"], key="dt_target")
+        dt_target = st.selectbox(
+            "Cast to",
+            ["int", "float", "str", "datetime", "bool", "category", "clean_numeric"],
+            key="dt_target"
+        )
         dt_fmt    = None
         if dt_target == "datetime":
             dt_fmt = st.text_input("Datetime format (optional, e.g. %Y-%m-%d)", key="dt_fmt")
@@ -377,6 +389,9 @@ with tabs[2]:
                     df_new[dt_col] = pd.to_numeric(df_new[dt_col], errors=errors_arg).astype("Int64")
                 elif dt_target == "float":
                     df_new[dt_col] = pd.to_numeric(df_new[dt_col], errors=errors_arg)
+                
+                elif dt_target == "clean_numeric":
+                    df_new[dt_col] = clean_numeric(df_new[dt_col])
                 elif dt_target == "bool":
                     df_new[dt_col] = df_new[dt_col].astype(bool)
                 elif dt_target == "category":
