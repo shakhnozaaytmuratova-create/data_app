@@ -1,91 +1,84 @@
-# DataCraft — Data Cleaning and Visualization Platform
+DataCraft — Data Cleaning and Visualization Platform
 
-## Overview
+Overview
 
 DataCraft is an interactive web-based application developed using Streamlit that supports the full data analysis workflow. The system enables users to upload datasets, perform data cleaning and transformation, generate visualizations, and export structured analytical reports.
+Objectives
 
----
+- To simplify the data preprocessing and cleaning process
+- To provide interactive tools for exploratory data analysis
+- To enable efficient visualization of structured datasets
+- To maintain a clear record of all transformation steps
+- To support exportable outputs suitable for reporting and documentation
 
-## Objectives
+Functional Components
 
-* To simplify the data preprocessing and cleaning process
-* To provide interactive tools for exploratory data analysis
-* To enable efficient visualization of structured datasets
-* To maintain a clear record of all transformation steps
-* To support exportable outputs suitable for reporting and documentation
-
----
-
-## Functional Components
-
-### 1. Data Upload and Overview
+1. Data Upload and Overview
 
 The application supports multiple data sources:
 
-* CSV files
-* Excel files (.xlsx)
-* JSON files
-* Google Sheets (via public link)
+-CSV files
+- Excel files (.xlsx)
+- JSON files
+- Google Sheets (via public link)
 
 Upon loading a dataset, the system provides an overview including:
 
-* Number of rows and columns
-* Missing values summary
-* Duplicate record detection
+- Number of rows and columns
+- Missing values summary
+- Duplicate record detection
 
----
-
-### 2. Data Cleaning and Transformation
+2. Data Cleaning and Transformation
 
 The cleaning module provides a comprehensive set of preprocessing tools.
 
-**Missing Value Handling**
+Missing Value Handling
 
-* Removal of rows or columns with missing data
-* Imputation using:
+- Removal of rows or columns with missing data
+- Imputation using:
 
-  * Mean, median, or mode
-  * Constant values
+  -Mean, median, or mode
+  -Constant values
   * Forward fill and backward fill
 
-**Duplicate Management**
+Duplicate Management
 
-* Detection and removal of duplicate records
-* Custom subset selection for duplicate checks
+- Detection and removal of duplicate records
+- Custom subset selection for duplicate checks
 
-**Data Type Conversion**
+Data Type Conversion
 
-* Conversion between numeric, categorical, datetime, and boolean formats
-* Error handling options for invalid conversions
+- Conversion between numeric, categorical, datetime, and boolean formats
+- Error handling options for invalid conversions
 
-**Feature Processing**
+Feature Processing
 
-* Encoding of categorical variables
-* Outlier handling using statistical techniques
-* Feature scaling:
+- Encoding of categorical variables
+-Outlier handling using statistical techniques
+- Feature scaling:
 
   * Min-Max normalization
   * Standardization
 
-**Transformation Logging**
+Transformation Logging
 
 * All operations are recorded
 * Enables reproducibility and auditability of the workflow
 
----
 
-### 3. Visualization Module
+
+3. Visualization Module
 
 The application provides both automated insights and custom visualization capabilities.
 
-**Automated Insights**
+Automated Insights
 
 * Distribution plots for numeric variables
 * Frequency analysis for categorical variables
 * Correlation matrix visualization
 * Scatter plots with trend estimation
 
-**Custom Visualization Builder**
+Custom Visualization Builder
 Supported chart types include:
 
 * Histogram
@@ -104,9 +97,8 @@ Additional features:
 * Aggregation functions (mean, sum, count, median)
 * Export of charts as image files
 
----
 
-### 4. Export and Reporting
+ 4. Export and Reporting
 
 The system provides multiple export options:
 
@@ -118,9 +110,7 @@ The system provides multiple export options:
   * Multi-sheet Excel report
   * JSON representation of transformation steps
 
----
-
-## Project Structure
+Project Structure
 
 ```
 DataCraft
@@ -136,9 +126,9 @@ DataCraft
 └── README.md
 ```
 
----
 
-## Installation
+
+Installation
 
 1. Clone the repository:
 
@@ -165,9 +155,8 @@ streamlit run app.py
 http://localhost:8501
 ```
 
----
 
-## Deployment
+Deployment
 
 The application can be deployed using Streamlit Cloud.
 
@@ -179,9 +168,7 @@ Steps:
 4. Ensure that all dependencies are listed in `requirements.txt`
 5. (Optional) Specify Python version using `runtime.txt`
 
----
-
-## Technologies Used
+Technologies Used
 
 * Python
 * Streamlit
@@ -193,9 +180,7 @@ Steps:
 * Scikit-learn
 * OpenPyXL
 
----
-
-## Use Cases
+Use Cases
 
 * Academic data analysis projects
 * Exploratory data analysis (EDA)
@@ -203,16 +188,13 @@ Steps:
 * Rapid development of analytical dashboards
 * Report generation for structured datasets
 
----
 
-## Limitations
+Limitations
 
 * Performance may decrease with very large datasets
 * Certain operations require properly formatted input data
 * Some statistical methods are limited to numeric data types
 
----
-
-## License
+License
 
 This project is intended for academic and educational use.
